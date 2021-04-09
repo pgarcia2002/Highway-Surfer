@@ -32,7 +32,19 @@ class Scene2 extends Phaser.Scene {
         toDodgeCars.add(car1)
         toDodgeCars.add(police)
 
-        this.scoreLabel = this.add.bitmapText(1, 40, "PixelFont", "SCORE", 20)
+        var graphics = this.add.graphics();
+    graphics.fillStyle(0x000000, 1);
+    graphics.beginPath();
+    graphics.moveTo(0, 0);
+    graphics.lineTo(config.width, 0);
+    graphics.lineTo(config.width, 40);
+    graphics.lineTo(0, 40);
+    graphics.lineTo(0, 0);
+    //
+    graphics.closePath();
+    graphics.fillPath();
+
+    this.scoreLabel = this.add.bitmapText(10, 15, "PixelFont", "SCORE ", 30);
         this.score = 0
 
     }
@@ -79,7 +91,6 @@ class Scene2 extends Phaser.Scene {
         this.scoreLabel.text = "SCORE " + this.score;
         this.resetCarsPos(petrolcan)
     }
- 
     //create the function to move the cars
     moveCars(cars, speed) {
         // increase the position of the cars on the vertical axis
