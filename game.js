@@ -4,6 +4,9 @@ var config = {
     height: 1080,
     physics: {
         default: 'arcade',
+        arcade: {
+            debug: false
+        }
     },
     scene: [Scene1, Scene2],
     pixelArt: true
