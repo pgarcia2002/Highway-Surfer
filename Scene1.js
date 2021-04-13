@@ -3,6 +3,7 @@ class Scene1 extends Phaser.Scene {
         super("bootGame");
     }
     preload() {
+        //load all images we are using in the game
         this.load.image('road', './assets/images/road.png');
         this.load.image('car', './assets/images/car.png');
         this.load.image('car1', './assets/images/car1.png')
