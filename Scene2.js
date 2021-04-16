@@ -58,7 +58,7 @@ class Scene2 extends Phaser.Scene {
 
 
         this.score = 0;
-        this.labelScore = this.add.bitmapText(10, 15, "PixelFont", "Score:", 30);
+        scoreText = this.add.bitmapText(10, 15, "PixelFont", "Score:" + score, 30);
         fps = this.add.bitmapText(10, 50, "PixelFont", "Fps:", 30)
     }
     update() {
@@ -95,14 +95,18 @@ class Scene2 extends Phaser.Scene {
         this.physics.add.overlap(car, toDodgeCars, this.gameover, null, this);
 
         highScoreText.text = 'Highscore: ' + localStorage.getItem("highscore"); {
-            if (this.score > localStorage.getItem("highscore")) {
-                localStorage.setItem("highscore", this.score);
+            if (score > localStorage.getItem("highscore")) {
+                localStorage.setItem("highscore", score);
             }
+        }
+        scoreText.text = 'Your score: ' + localStorage.getItem("score"); {
+            localStorage.setItem("score", score);
         }
         fps.text = 'Fps: ' + this.physics.world.fps
         //to clear highscore
         // localStorage.clear()
         console.log(this.physics.world.fps)
+        console.log(score)
     }
     gameover() {
         this.scene.start("gameOver");
@@ -111,9 +115,9 @@ class Scene2 extends Phaser.Scene {
     //create the function to pick the petrolcan
     pickPetrolCan(car, petrolcan) {
         //add +1 to the score
-        this.score += 1;
+        score += 1;
         //update text score
-        this.labelScore.text = "Score: " + this.score;
+        scoreText.text = "Score: " + score;
         //reset the position of the petrolcan
         this.resetCarsPos(petrolcan)
     }
@@ -125,7 +129,6 @@ class Scene2 extends Phaser.Scene {
         if (cars.y > config.height) {
             //call a reset position function
             this.resetCarsPos(cars);
-
         }
     }
 

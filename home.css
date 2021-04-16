@@ -1,0 +1,41 @@
+body {
+    background-color: black;
+}
+
+h1 {
+    color: yellow;
+    text-align: center;
+    font-size: 80px;
+}
+
+.image {
+    margin-top: 70px;
+    display: block;
+    text-align: center;
+
+}
+
+#img {
+    height: 500px;
+    width: 700px;
+}
+
+
+.Play {
+    text-align: center;
+    margin-top: 50px;
+}
+
+button {
+    font-family: 'Montserrat', sans-serif;
+    background-color: yellow;
+    color: black;
+    font-size: 40px;
+
+
+    cursor: pointer;
+    transition: all 0.3s ease 0s;
+    text-align: center;
+
+
+}

@@ -5,10 +5,29 @@ class Scene3 extends Phaser.Scene {
     create() {
         var graphics = this.add.graphics();
         graphics.fillStyle(0x000000, 1);
-        graphics.fillPath();
-        this.gameover = this.add.bitmapText(30, 15, "PixelFont", "Game Over " + highscore, 300);
+        this.gameover = this.add.bitmapText(10, 300, "PixelFont", "Game Over", 180);
+        this.space = this.add.bitmapText(40, 600, "PixelFont", "Press Space to play again", 70);
+
+        this.labelScore = this.add.bitmapText(50, 420, "PixelFont", "Your score:", 100);
+        highScoreText = this.add.bitmapText(50, 500, "PixelFont", "Highscore " + highscore, 100);
+        cursors = this.input.keyboard.createCursorKeys()
+        console.log(this.score)
     }
+
     update() {
-        this.gameover.text = "Game Over " + highscore, 300
+        this.gameover.text = "Game Over "
+        this.labelScore.text = "Your score: " + score;
+        highScoreText.text = 'Highscore: ' + localStorage.getItem("highscore"); {
+            if (score > localStorage.getItem("highscore")) {
+                localStorage.setItem("highscore", score);
+            }
+        }
+        scoreText.text = 'Your score: ' + localStorage.getItem("score"); {
+            localStorage.setItem("score", score);
+        }
+        if (cursors.space.isDown) {
+            this.scene.start("bootGame");
+            score = 0
+        }
     }
 }

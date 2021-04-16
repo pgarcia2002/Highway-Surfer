@@ -14,7 +14,7 @@ var config = {
             target: 60,
         }
     },
-    scene: [Scene1, Scene2, Scene3, ],
+    scene: [Scene1, Scene2, Scene3],
     pixelArt: true,
 };
 
