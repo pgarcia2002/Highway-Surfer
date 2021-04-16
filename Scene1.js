@@ -14,7 +14,6 @@ class Scene1 extends Phaser.Scene {
         this.load.bitmapFont("PixelFont", "./assets/font/font.png", "./assets/font/font.xml")
     }
     create() {
-        this.add.text(20, 20, "Loading game...");
         this.scene.start("playGame");
     }
 }

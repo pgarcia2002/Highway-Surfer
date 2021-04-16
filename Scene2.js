@@ -2,6 +2,7 @@ class Scene2 extends Phaser.Scene {
     constructor() {
         super("playGame");
     }
+
     create() {
         // set road image and setup size
         this.road = this.add.image(0, 0, 'road');
@@ -25,6 +26,7 @@ class Scene2 extends Phaser.Scene {
         car.body.collideWorldBounds = true;
         //have keys input for movement
         cursors = this.input.keyboard.createCursorKeys()
+        console.log(cursors)
         // to dodge cars group
         toDodgeCars = this.physics.add.group();
         toDodgeCars.add(truck)
@@ -43,8 +45,7 @@ class Scene2 extends Phaser.Scene {
         graphics.closePath();
         graphics.fillPath();
         //score setup
-        this.scoreLabel = this.add.bitmapText(10, 15, "PixelFont", "SCORE ", 30);
-        this.score = 0
+
         //random road for cars array with setup
         line = config.width / 2 - 45
         line1 = config.width / 1.5 + 60
@@ -53,6 +54,12 @@ class Scene2 extends Phaser.Scene {
         randomroad = [line, line1, line2, line3]
 
 
+        highScoreText = this.add.bitmapText(500, 15, "PixelFont", "Highscore " + highscore, 30);
+
+
+        this.score = 0;
+        this.labelScore = this.add.bitmapText(10, 15, "PixelFont", "Score:", 30);
+        fps = this.add.bitmapText(10, 50, "PixelFont", "Fps:", 30)
     }
     update() {
         //the car doesn’t move when game is starting
@@ -66,39 +73,47 @@ class Scene2 extends Phaser.Scene {
         if (cursors.right.isDown) {
             car.setVelocity(300, 0)
         }
+
+        if (cursors.up.isDown) {
+            car.setVelocity(0, -300)
+        }
+        if (cursors.down.isDown) {
+            car.setVelocity(0, 300)
+        }
         //call a function to move the cars vertically and update the speed of cars for difficulty
-        if (this.score >= 0 && this.score <= 1000) {
-            this.moveCars(car1, 2);
-            this.moveCars(truck, 1);
-            this.moveCars(police, 3);
-            this.moveCars(van, 1);
-        }
-        if (this.score >= 1000 && this.score <= 10000) {
-            this.moveCars(car1, 5);
-            this.moveCars(truck, 3);
-            this.moveCars(police, 6);
-            this.moveCars(van, 3);
-        }
-        if (this.score >= 10000) {
-            this.moveCars(car1, 8);
-            this.moveCars(truck, 6);
-            this.moveCars(police, 9);
-            this.moveCars(van, 6);
-        }
+
+        this.moveCars(car1, 2);
+        this.moveCars(truck, 1);
+        this.moveCars(police, 3);
+        this.moveCars(van, 1);
         this.moveCars(petrolcan, 4)
 
         //scroll the background
         this.road.tilePositionY -= 0.5
         //when petrol can collide with car call pickPetrolCan function
         this.physics.add.overlap(car, petrolcan, this.pickPetrolCan, null, this);
+        this.physics.add.overlap(car, toDodgeCars, this.gameover, null, this);
 
+        highScoreText.text = 'Highscore: ' + localStorage.getItem("highscore"); {
+            if (this.score > localStorage.getItem("highscore")) {
+                localStorage.setItem("highscore", this.score);
+            }
+        }
+        fps.text = 'Fps: ' + this.physics.world.fps
+        //to clear highscore
+        // localStorage.clear()
+        console.log(this.physics.world.fps)
     }
+    gameover() {
+        this.scene.start("gameOver");
+    }
+
     //create the function to pick the petrolcan
     pickPetrolCan(car, petrolcan) {
         //add +1 to the score
         this.score += 1;
-        //update score 
-        this.scoreLabel.text = "SCORE " + this.score;
+        //update text score
+        this.labelScore.text = "Score: " + this.score;
         //reset the position of the petrolcan
         this.resetCarsPos(petrolcan)
     }
@@ -137,3 +152,8 @@ let line1
 let line2
 let line3
 let randomroad
+var score = 0;
+var highscore = 0;
+var highScoreText;
+var scoreText;
+var fps;

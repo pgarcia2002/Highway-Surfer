@@ -5,11 +5,17 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            debug: false
+            debug: false,
+            fps: 60,
+        },
+        fps: {
+            max: 60,
+            min: 30,
+            target: 60,
         }
     },
-    scene: [Scene1, Scene2],
-    pixelArt: true
+    scene: [Scene1, Scene2, Scene3, ],
+    pixelArt: true,
 };
 
 var game = new Phaser.Game(config);
