@@ -12,6 +12,9 @@ class Scene1 extends Phaser.Scene {
         this.load.image('van', './assets/images/van.png')
         this.load.image('petrolcan', './assets/images/bidon.png')
         this.load.bitmapFont("PixelFont", "./assets/font/font.png", "./assets/font/font.xml")
+        this.load.audio('song', ['./assets/audio/song.mp3']);
+        this.load.audio("crash", ["./assets/audio/crash.mp3"]);
+
     }
     create() {
         this.scene.start("playGame");

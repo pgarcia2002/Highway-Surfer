@@ -4,6 +4,13 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
+        this.music = this.sound.add('song', {
+            volume: 0.01
+        });
+        this.music.play()
+        this.crash = this.sound.add('crash', {
+            volume: 0.05
+        });
         // set road image and setup size
         this.road = this.add.image(0, 0, 'road');
         this.road.setOrigin(0, 0);
@@ -11,7 +18,7 @@ class Scene2 extends Phaser.Scene {
         // set cars image and setup size
         car = this.physics.add.image(300, 880, 'car');
         truck = this.physics.add.image(config.width / 2 - 45, config.height / 10, "truck")
-        van = this.physics.add.image(config.width / 1.5 + 60, config.height / 10, "van")
+        van = this.physics.add.image(config.width / 1.5 + 60, config.height / 3, "van")
         car1 = this.physics.add.image(config.width / 3.5, config.height / 10, "car1");
         police = this.physics.add.image(config.width / 2 + 65, config.height / 10, "police");
         petrolcan = this.physics.add.image(config.width / 2 + 65, config.height / 10, "petrolcan");
@@ -57,7 +64,6 @@ class Scene2 extends Phaser.Scene {
         highScoreText = this.add.bitmapText(500, 15, "PixelFont", "Highscore " + highscore, 30);
 
 
-        this.score = 0;
         scoreText = this.add.bitmapText(10, 15, "PixelFont", "Score:" + score, 30);
         fps = this.add.bitmapText(10, 50, "PixelFont", "Fps:", 30)
     }
@@ -103,13 +109,20 @@ class Scene2 extends Phaser.Scene {
             localStorage.setItem("score", score);
         }
         fps.text = 'Fps: ' + this.physics.world.fps
+
         //to clear highscore
         // localStorage.clear()
-        console.log(this.physics.world.fps)
-        console.log(score)
+
+        if (cursors.shift.isDown) {
+            this.scene.launch('pauseGame')
+            this.scene.pause();
+        }
+
     }
     gameover() {
         this.scene.start("gameOver");
+        this.music.stop()
+        this.crash.play()
     }
 
     //create the function to pick the petrolcan

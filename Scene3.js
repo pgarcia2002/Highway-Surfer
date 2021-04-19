@@ -11,11 +11,10 @@ class Scene3 extends Phaser.Scene {
         this.labelScore = this.add.bitmapText(50, 420, "PixelFont", "Your score:", 100);
         highScoreText = this.add.bitmapText(50, 500, "PixelFont", "Highscore " + highscore, 100);
         cursors = this.input.keyboard.createCursorKeys()
-        console.log(this.score)
     }
 
     update() {
-        this.gameover.text = "Game Over "
+        this.gameover.text = "Game Over"
         this.labelScore.text = "Your score: " + score;
         highScoreText.text = 'Highscore: ' + localStorage.getItem("highscore"); {
             if (score > localStorage.getItem("highscore")) {
