@@ -4,10 +4,12 @@ class Scene2 extends Phaser.Scene {
     }
 
     create() {
+        //here we call the song we loaded previously, set the volume and play it 
         this.music = this.sound.add('song', {
             volume: 0.01
         });
         this.music.play()
+        //here we call the crash sound we loaded previously and  set the volume
         this.crash = this.sound.add('crash', {
             volume: 0.05
         });
@@ -15,14 +17,14 @@ class Scene2 extends Phaser.Scene {
         this.road = this.add.image(0, 0, 'road');
         this.road.setOrigin(0, 0);
         this.road.setScale(0.3, 0.275)
-        // set cars image and setup size
+        // set cars and position
         car = this.physics.add.image(300, 880, 'car');
         truck = this.physics.add.image(config.width / 2 - 45, config.height / 10, "truck")
         van = this.physics.add.image(config.width / 1.5 + 60, config.height / 3, "van")
         car1 = this.physics.add.image(config.width / 3.5, config.height / 10, "car1");
         police = this.physics.add.image(config.width / 2 + 65, config.height / 10, "police");
         petrolcan = this.physics.add.image(config.width / 2 + 65, config.height / 10, "petrolcan");
-
+        // set image size
         car.setScale(0.7)
         car1.setScale(0.7)
         truck.setScale(0.7)
@@ -33,7 +35,6 @@ class Scene2 extends Phaser.Scene {
         car.body.collideWorldBounds = true;
         //have keys input for movement
         cursors = this.input.keyboard.createCursorKeys()
-        console.log(cursors)
         // to dodge cars group
         toDodgeCars = this.physics.add.group();
         toDodgeCars.add(truck)
@@ -60,7 +61,7 @@ class Scene2 extends Phaser.Scene {
         line3 = config.width / 2 + 65
         randomroad = [line, line1, line2, line3]
 
-
+        // highscore , score and fps text
         highScoreText = this.add.bitmapText(500, 15, "PixelFont", "Highscore " + highscore, 30);
 
 
@@ -79,46 +80,55 @@ class Scene2 extends Phaser.Scene {
         if (cursors.right.isDown) {
             car.setVelocity(300, 0)
         }
-
+        //car movement up
         if (cursors.up.isDown) {
             car.setVelocity(0, -300)
         }
+        //car movement down
         if (cursors.down.isDown) {
             car.setVelocity(0, 300)
         }
         //call a function to move the cars vertically and update the speed of cars for difficulty
-
+        if (score >= 30000) {
+            this.moveCars(car1, 3);
+            this.moveCars(truck, 2);
+            this.moveCars(police, 4);
+            this.moveCars(van, 2);
+        }
         this.moveCars(car1, 2);
         this.moveCars(truck, 1);
         this.moveCars(police, 3);
         this.moveCars(van, 1);
-        this.moveCars(petrolcan, 4)
+        this.moveCars(petrolcan, 4);
 
-        //scroll the background
-        this.road.tilePositionY -= 0.5
         //when petrol can collide with car call pickPetrolCan function
         this.physics.add.overlap(car, petrolcan, this.pickPetrolCan, null, this);
+        //when toDodgeCars collide with car call gameover function
         this.physics.add.overlap(car, toDodgeCars, this.gameover, null, this);
-
+        //highscore 
         highScoreText.text = 'Highscore: ' + localStorage.getItem("highscore"); {
             if (score > localStorage.getItem("highscore")) {
                 localStorage.setItem("highscore", score);
             }
         }
+        // score
         scoreText.text = 'Your score: ' + localStorage.getItem("score"); {
             localStorage.setItem("score", score);
         }
+        //fps
         fps.text = 'Fps: ' + this.physics.world.fps
 
         //to clear highscore
         // localStorage.clear()
 
+        // pause on shift button
         if (cursors.shift.isDown) {
-            this.scene.launch('pauseGame')
+            this.scene.launch("pauseGame")
             this.scene.pause();
         }
 
     }
+    //Gameover function
     gameover() {
         this.scene.start("gameOver");
         this.music.stop()
@@ -127,7 +137,7 @@ class Scene2 extends Phaser.Scene {
 
     //create the function to pick the petrolcan
     pickPetrolCan(car, petrolcan) {
-        //add +1 to the score
+        //add to the score
         score += 1;
         //update text score
         scoreText.text = "Score: " + score;

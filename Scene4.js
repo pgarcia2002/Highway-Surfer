@@ -3,19 +3,18 @@ class Scene4 extends Phaser.Scene {
         super("pauseGame");
     }
     create() {
-        var graphics = this.add.graphics();
-        graphics.fillStyle(0x000000, 1);
+        // pause text
         this.gameover = this.add.bitmapText(170, 300, "PixelFont", "Pause", 180);
         this.space = this.add.bitmapText(90, 600, "PixelFont", "Press Shift to resume", 70);
 
-
         cursors = this.input.keyboard.createCursorKeys()
+
     }
 
     update() {
-
+        // resume game 
         if (cursors.shift.isDown) {
-            this.scene.resume('playGame');
+            this.scene.resume("playGame");
             this.scene.stop();
         }
     }
