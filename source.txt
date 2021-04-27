@@ -1,0 +1,8 @@
+https://phaser.io/tutorials/making-your-first-phaser-3-game/part1
+https://www.freecodecamp.org/news/how-to-build-a-simple-game-in-the-browser-with-phaser-3-and-typescript-bdc94719135/
+https://rexrainbow.github.io/phaser3-rex-notes/docs/site/index.html
+https://stackoverflow.com/questions/50988219/pause-and-resume-game-in-phaser-3
+https://www.joshmorony.com/phaser-fundamentals-handling-collisions/
+https://www.youtube.com/watch?v=88DS3Z8nOdY
+https://www.thepolyglotdeveloper.com/2020/08/handle-collisions-between-sprites-phaser-arcade-physics/
+https://www.youtube.com/watch?v=jVlNZgX5fV8
